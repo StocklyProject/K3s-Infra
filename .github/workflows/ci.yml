@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  test_and_push:
+    name: Run tests and push Docker image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t jungeunyoon/stock_server:${{ github.sha }} .
+          docker push jungeunyoon/stock_server:${{ github.sha }}
+
+      - name: Create output
+        run: sh ./build.sh
+
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PUSH_TOKEN }}
+        with:
+          source-directory: 'output'
+          destination-github-username: 'Stockly-Project'
+          destination-repository-name: 'K3s-Infra'
+          user-email: ${{ secrets.EMAIL }}
+          commit-message: ${{ github.event.head_commit.message }}
+          target-branch: 'main'
+
+      # 6. 테스트: 푸시 후 변수 확인
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
