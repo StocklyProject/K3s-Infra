@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.orderService.name }}
+  labels:
+    app: {{ .Values.orderService.name }}
+spec:
+  replicas: {{ .Values.orderService.replica }}
+  selector:
+    matchLabels:
+      app: {{ .Values.orderService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.orderService.name }}
+    spec:
+      containers:
+        - name: {{ .Values.orderService.name }}
+          image: {{ .Values.orderService.image }}
+          ports:
+            - containerPort: {{ .Values.orderService.port }}
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"

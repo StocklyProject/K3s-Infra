@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.alertService.name }}
+  labels:
+    app: {{ .Values.alertService.name }}
+spec:
+  replicas: {{ .Values.alertService.replica }}
+  selector:
+    matchLabels:
+      app: {{ .Values.alertService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.alertService.name }}
+    spec:
+      containers:
+        - name: {{ .Values.alertService.name }}
+          image: {{ .Values.alertService.image }}
+          ports:
+            - containerPort: {{ .Values.alertService.port }}
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"

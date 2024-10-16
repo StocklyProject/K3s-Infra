@@ -1,0 +1,6 @@
+alertService:
+  name: alert-service
+  replica: 1
+  enabled: true
+  image: jungeunyoon/alert-service:1.0.1
+  port: 8004

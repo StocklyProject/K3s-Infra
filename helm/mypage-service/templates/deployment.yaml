@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mypageService.name }}
+  labels:
+    app: {{ .Values.mypageService.name }}
+spec:
+  replicas: {{ .Values.mypageService.replica }}
+  selector:
+    matchLabels:
+      app: {{ .Values.mypageService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mypageService.name }}
+    spec:
+      containers:
+        - name: {{ .Values.mypageService.name }}
+          image: {{ .Values.mypageService.image }}
+          ports:
+            - containerPort: {{ .Values.mypageService.port }}
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"

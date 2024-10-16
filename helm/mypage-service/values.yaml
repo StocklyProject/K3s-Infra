@@ -1,0 +1,6 @@
+mypageService:
+  name: mypage-service
+  replica: 1
+  enabled: true
+  image: jungeunyoon/mypage-service:1.0.1
+  port: 8003
