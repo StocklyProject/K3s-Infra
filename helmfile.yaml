@@ -5,26 +5,30 @@ repositories:
     url: https://helm.traefik.io/traefik
 releases:
   - name: stock-server
-    chart: ./helm/stock-server
+    chart: ./stock-server
     values:
-      - ./helm/stock-server/values.yaml
+      - ./stock-server/values.yaml
   - name: stock-service
-    chart: ./helm/stock-service
+    chart: ./stock-service
     values:
-      - ./helm/stock-service/values.yaml
+      - ./stock-service/values.yaml
   - name: order-service
-    chart: ./helm/order-service
+    chart: ./order-service
     values:
-      - ./helm/order-service/values.yaml
+      - ./order-service/values.yaml
   - name: mypage-service
-    chart: ./helm/mypage-service
+    chart: ./mypage-service
     values:
-      - ./helm/mypage-service/values.yaml
+      - ./mypage-service/values.yaml
   - name: alert-service
-    chart: ./helm/alert-service
+    chart: ./alert-service
     values:
-      - ./helm/alert-service/values.yaml
+      - ./alert-service/values.yaml
   - name: traefik
-    chart: traefik/traefik
+    chart: ./traefik
     values:
-      - ./helm/traefik/values.yaml
+      - ./traefik/values.yaml
+  - name: mysql
+    chart: ./mysql
+    values:
+      - ./mysql/values.yaml

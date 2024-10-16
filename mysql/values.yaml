@@ -6,7 +6,4 @@ mysql:
   service:
     port: 3306
   auth:
-    rootPassword: stockly
-    database: stockly
-    username: user
-    password: 12345678
+    secretName: mysql-secret
