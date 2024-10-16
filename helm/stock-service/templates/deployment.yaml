@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.stockService.name }}
+  labels:
+    app: {{ .Values.stockService.name }}
+spec:
+  replicas: {{ .Values.stockService.replica }}
+  selector:
+    matchLabels:
+      app: {{ .Values.stockService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.stockService.name }}
+    spec:
+      containers:
+        - name: {{ .Values.stockService.name }}
+          image: {{ .Values.stockService.image }}
+          ports:
+            - containerPort: {{ .Values.stockService.port }}
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"

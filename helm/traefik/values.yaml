@@ -1,0 +1,27 @@
+dashboard:
+  enabled: true # 대시보드 활성화
+
+ports:
+  web:
+    port: 80
+    expose:
+      enabled: true
+  websecure:
+    port: 443
+    expose:
+      enabled: true
+  dashboard:
+    port: 9000
+    expose:
+      enabled: true
+    enabled: true
+
+service:
+  type: LoadBalancer # 서비스 타입 설정
+
+additionalArguments:
+  - "--api.insecure=true"
+  - "--api.dashboard=true"
+  - "--entrypoints.web.address=:80"
+  - "--entrypoints.websecure.address=:443"
+  - "--entrypoints.dashboard.address=:9000"

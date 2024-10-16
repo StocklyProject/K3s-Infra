@@ -1,0 +1,30 @@
+repositories:
+  - name: stable
+    url: https://charts.helm.sh/stable
+  - name: traefik
+    url: https://helm.traefik.io/traefik
+releases:
+  - name: stock-server
+    chart: ./helm/stock-server
+    values:
+      - ./helm/stock-server/values.yaml
+  - name: stock-service
+    chart: ./helm/stock-service
+    values:
+      - ./helm/stock-service/values.yaml
+  - name: order-service
+    chart: ./helm/order-service
+    values:
+      - ./helm/order-service/values.yaml
+  - name: mypage-service
+    chart: ./helm/mypage-service
+    values:
+      - ./helm/mypage-service/values.yaml
+  - name: alert-service
+    chart: ./helm/alert-service
+    values:
+      - ./helm/alert-service/values.yaml
+  - name: traefik
+    chart: traefik/traefik
+    values:
+      - ./helm/traefik/values.yaml
