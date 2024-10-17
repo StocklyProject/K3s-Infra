@@ -24,11 +24,11 @@ releases:
     chart: ./alert-service
     values:
       - ./alert-service/values.yaml
-  - name: traefik
-    chart: ./traefik
-    values:
-      - ./traefik/values.yaml
   - name: mysql
     chart: ./mysql
     values:
       - ./mysql/values.yaml
+  - name: kafka
+    chart: ./kafka
+    values:
+      - ./kafka/values.yaml
