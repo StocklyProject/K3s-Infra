@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: stockly-app
+  name: stock-service
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/StocklyProject/K3s-Infra'
     targetRevision: HEAD
-    path: argoCD/templates
+    path: stock-service
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
