@@ -28,7 +28,11 @@ releases:
     chart: ./mysql
     values:
       - ./mysql/values.yaml
-  - name: kafka
-    chart: ./kafka
+  - name: broker
+    chart: ./kafka/broker
     values:
-      - ./kafka/values.yaml
+      - ./kafka/broker/values.yaml
+  - name: zookeeper
+    chart: ./kafka/zookeeper
+    values:
+      - ./kafka/zookeeper/values.yaml
