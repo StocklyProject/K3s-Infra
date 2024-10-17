@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  type: ClusterIP
+  ports:
+    - name: kafka-client-port
+      port: {{ .Values.listeners.client.containerPort }}
+      targetPort: {{ .Values.listeners.client.containerPort }}
+    - name: kafka-external-port
+      port: {{ .Values.listeners.external.containerPort }}
+      targetPort: {{ .Values.listeners.external.containerPort }}
+    - name: kafka-interbroker-port
+      port: {{ .Values.listeners.interbroker.containerPort }}
+      targetPort: {{ .Values.listeners.interbroker.containerPort }}
+  selector:
+    app: kafka
