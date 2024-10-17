@@ -1,1 +1,18 @@
-cd 작업 예정
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stockly-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/StocklyProject/K3s-Infra'
+    targetRevision: HEAD
+    path: ./helmfile.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
