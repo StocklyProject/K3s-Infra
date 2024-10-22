@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.mysql.name }}
+  name: mysql
   labels:
-    app: {{ .Values.mysql.name }}
+    app: mysql
 spec:
-  replicas: {{ .Values.mysql.replica }}
+  replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.mysql.name }}
+      app: mysql
   template:
     metadata:
       labels:
-        app: {{ .Values.mysql.name }}
+        app: mysql
     spec:
       containers:
-        - name: {{ .Values.mysql.name }}
-          image: {{ .Values.mysql.image }}
+        - name: mysql
+          image: mysql:5.7
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
-                  key: MYSQL_PASSWORD
+                  key: MYSQL_ROOT_PASSWORD
             - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
@@ -38,18 +38,16 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: MYSQL_PASSWORD
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_HOST
           ports:
-            - containerPort: {{ .Values.mysql.service.port }}
+            - containerPort: 3306
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "500m"
-            limits:
-              memory: "1Gi"
-              cpu: "1000m"
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
