@@ -7,3 +7,5 @@ mysql:
     port: 3306
   auth:
     secretName: mysql-secret
+configmaps:
+  mysqlInitdbConfigName: mysql-initdb-config
