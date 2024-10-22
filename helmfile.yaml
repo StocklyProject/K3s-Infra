@@ -36,3 +36,7 @@ releases:
     chart: ./kafka/zookeeper
     values:
       - ./kafka/zookeeper/values.yaml
+  - name: redis
+    chart: ./redis/
+    values:
+      - ./redis/values.yaml
