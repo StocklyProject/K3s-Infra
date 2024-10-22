@@ -38,17 +38,17 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: MYSQL_PASSWORD
-            - name: MYSQL_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: MYSQL_HOST
           ports:
             - containerPort: 3306
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
+            - name: initdb-scripts
+              mountPath: /docker-entrypoint-initdb.d  # Mounting init SQL script
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: mysql-pvc
+        - name: initdb-scripts
+          configMap:
+            name: mysql-initdb-config
