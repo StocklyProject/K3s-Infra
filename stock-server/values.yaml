@@ -4,3 +4,7 @@ stockServer:
   enabled: true
   image: jungeunyoon/stock_server:0.0.55
   port: 8000
+  auth:
+    secretName: app-secret
+secrets:
+  appSecretName: app-secret
