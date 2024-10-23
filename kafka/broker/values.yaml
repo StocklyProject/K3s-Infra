@@ -1,9 +1,3 @@
-zookeeper:
-  service:
-    headless:
-      enabled: true
-      name: zoo-headless
-
 replicaCount: 1
 
 image:
