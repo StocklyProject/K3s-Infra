@@ -6,37 +6,46 @@ repositories:
 releases:
   - name: stock-server
     chart: ./stock-server
+    namespace: stockly
     values:
       - ./stock-server/values.yaml
   - name: stock-service
     chart: ./stock-service
+    namespace: stockly
     values:
       - ./stock-service/values.yaml
   - name: order-service
     chart: ./order-service
+    namespace: stockly
     values:
       - ./order-service/values.yaml
   - name: mypage-service
     chart: ./mypage-service
+    namespace: stockly
     values:
       - ./mypage-service/values.yaml
   - name: alert-service
     chart: ./alert-service
+    namespace: stockly
     values:
       - ./alert-service/values.yaml
   - name: mysql
     chart: ./mysql
+    namespace: stockly
     values:
       - ./mysql/values.yaml
   - name: broker
     chart: ./kafka/broker
+    namespace: stockly
     values:
       - ./kafka/broker/values.yaml
   - name: zookeeper
     chart: ./kafka/zookeeper
+    namespace: stockly
     values:
       - ./kafka/zookeeper/values.yaml
   - name: redis
     chart: ./redis/
+    namespace: stockly
     values:
       - ./redis/values.yaml
