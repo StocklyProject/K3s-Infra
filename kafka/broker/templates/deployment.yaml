@@ -29,6 +29,8 @@ spec:
               value: "{{ .Values.listeners.securityProtocolMap }}"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: "PLAINTEXT://kafka-broker.stockly.svc.cluster.local:9092"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
