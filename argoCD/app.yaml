@@ -10,6 +10,7 @@ spec:
     targetRevision: HEAD
     path: argoCD/templates
   destination:
+
     server: 'https://kubernetes.default.svc'
     namespace: stockly
   syncPolicy:
