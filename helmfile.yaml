@@ -4,10 +4,10 @@ repositories:
   - name: traefik
     url: https://helm.traefik.io/traefik
 releases:
-#  - name: stock-server
-#    chart: ./stock-server
-#    values:
-#      - ./stock-server/values.yaml
+  - name: stock-server
+    chart: ./stock-server
+    values:
+      - ./stock-server/values.yaml
   - name: stock-service
     chart: ./stock-service
     values:
