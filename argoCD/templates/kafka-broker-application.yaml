@@ -11,7 +11,7 @@ spec:
     path: kafka/broker
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: default
+    namespace: stockly
   syncPolicy:
     automated:
       prune: true

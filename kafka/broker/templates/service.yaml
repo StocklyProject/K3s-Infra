@@ -4,7 +4,7 @@ metadata:
   name: kafka
 spec:
   type: ClusterIP
-  clusterIP: 10.106.136.218  # 고정 IP 설정
+  clusterIP: 10.106.136.219  # 고정 IP 설정
   ports:
     - name: kafka-client-port
       port: {{ .Values.listeners.client.containerPort }}
