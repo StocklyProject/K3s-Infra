@@ -27,4 +27,4 @@ service:
 
 
 externalZookeeper:
-  servers: ["zoo-headless.{{ .Release.Namespace }}.svc.cluster.local:2181"]
+  servers: ["zoo-headless.stockly.svc.cluster.local:2181"]
