@@ -13,3 +13,4 @@ spec:
       name: mysql
   selector:
     app: {{ .Values.mysql.name }}
+
