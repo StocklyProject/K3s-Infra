@@ -1,39 +1,40 @@
-replicaCount: 1
+# Kafka 브로커 수를 3개로 설정
+replicaCount: 3  # 브로커 수를 3개로 확장
 
 image:
-  registry: docker.io  # 기본 레지스트리 사용
+  registry: docker.io  # 기본 Docker 레지스트리 사용
   repository: bitnami/kafka
-  tag: 2.8.0
+  tag: 2.8.0  # Kafka 버전 설정
   pullPolicy: IfNotPresent
 
+# 리소스 제한 및 요청
 resources:
   limits:
     memory: "3Gi"
-    cpu: "1000m"
+    cpu: "1000m"  # CPU 및 메모리 제한 설정
   requests:
     memory: "512Mi"
-    cpu: "500m"
+    cpu: "500m"  # 최소 CPU 및 메모리 요청 설정
 
 # Kafka 리스너 설정
 listeners:
   client:
     name: CLIENT
     containerPort: 9092
-    protocol: PLAINTEXT  # 적절한 프로토콜 설정 (예: PLAINTEXT)
+    protocol: PLAINTEXT  # 내부 클라이언트와 통신할 때 사용할 포트 및 프로토콜
   external:
     name: EXTERNAL
     containerPort: 9094
-    protocol: PLAINTEXT  # 적절한 프로토콜 설정
+    protocol: PLAINTEXT  # 외부 통신을 위한 설정
   interbroker:
     name: INTERNAL
     containerPort: 9093
-    protocol: PLAINTEXT  # 내부 브로커 간 통신에 필요한 설정
+    protocol: PLAINTEXT  # 브로커 간 통신을 위한 포트 및 프로토콜 설정
   securityProtocolMap: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
-
 
 # Kafka 로그 설정 (필요시 적용)
 log4j: |
-  log4j.rootLogger=INFO, stdout
+  log4j.rootLogger=INFO, stdout  # 루트 로그 레벨을 INFO로 설정
   log4j.appender.stdout=org.apache.log4j.ConsoleAppender
   log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
   log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
@@ -42,5 +43,13 @@ log4j: |
 
 # Kafka 퍼시스턴스 설정
 persistence:
-  enabled: true
-  size: 10Gi
+  enabled: true  # 퍼시스턴스 활성화
+  size: 10Gi  # 각 브로커에 대해 10Gi의 스토리지 설정
+
+# Kafka 파티션 설정
+kafka:
+  configurationOverrides:
+    "num.partitions": 5  # 생성되는 모든 토픽에 대한 기본 파티션 수를 5로 설정
+
+# 추가 설정
+autoCreateTopicsEnable: true  # 자동으로 토픽이 생성되도록 설정
