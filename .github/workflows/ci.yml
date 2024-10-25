@@ -19,10 +19,7 @@ jobs:
 
       - name: Create output
         run: sh ./build.sh
-
-      - name: Set timezone to Asia/Seoul
-        run: echo "TZ='Asia/Seoul'" >> /etc/environment
-
+        
       - name: Pushes to another repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
@@ -34,7 +31,7 @@ jobs:
           destination-repository-name: 'K3s-Infra'
           user-email: ${{ secrets.EMAIL }}
           commit-message: |
-            ${{ github.event.head_commit.message || 'feat: update repository (' }}$(date +'%m:%d')${{ ')' }}
+            ${{ github.event.head_commit.message || 'feat: update repository' }}
           target-branch: 'main'
 
       - name: Test get variable exported by push-to-another-repository
