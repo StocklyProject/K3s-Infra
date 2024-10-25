@@ -2,4 +2,4 @@ stockService:
   name: stock-service
   replica: 1
   enabled: true
-  image: jungeunyoon/stock-service:0.0.12
+  image: jungeunyoon/stock-service:0.0.12 # test
