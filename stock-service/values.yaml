@@ -4,3 +4,4 @@ stockService:
   enabled: true
   image: jungeunyoon/stock-service:0.0.11
   port: 8001
+ 
