@@ -9,3 +9,7 @@ mysql:
     secretName: mysql-secret
 configmaps:
   mysqlInitdbConfigName: mysql-config
+pvc:
+  enabled: true
+  name: mysql-pvc
+  storage: 10Gi
