@@ -27,5 +27,6 @@ service:
 
 autoCreateTopicsEnable: true
 
+
 externalZookeeper:
   servers: ["zoo-headless.stockly.svc.cluster.local:2181"]
