@@ -1,4 +1,4 @@
-{{- range $i := until (int .Values.replicaCount) }}  # replicaCount를 int로 변환
+{{- range $i := until .Values.replicaCount }}  # replicaCount를 int로 변환
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -6,7 +6,7 @@ metadata:
   name: kafka
 spec:
   serviceName: kafka
-  replicas: {{ .Values.replicaCount | int }}  # 브로커 수 설정 (int로 변환)
+  replicas: {{ .Values.replicaCount }}  # 브로커 수 설정 (int로 변환)
   selector:
     matchLabels:
       app: kafka
