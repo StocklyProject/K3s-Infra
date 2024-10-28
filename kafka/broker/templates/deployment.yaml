@@ -1,13 +1,10 @@
-{{- range $i := until .Values.replicaCount }}
----
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: kafka-{{ $i }}  # 브로커 이름에 인덱스 추가
+  name: kafka
 spec:
   serviceName: kafka
-  replicas: {{ .Values.replicaCount }}  # 브로커 수 설정
+  replicas: {{ .Values.replicaCount }}  # replicaCount 값에 따라 복제본 수 설정
   selector:
     matchLabels:
       app: kafka
@@ -28,13 +25,15 @@ spec:
               containerPort: {{ .Values.listeners.interbroker.containerPort }}  # 브로커 간 포트
           env:
             - name: KAFKA_BROKER_ID
-              value: "{{ $i }}"  # 브로커 ID 설정
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name  # 포드의 고유한 이름을 브로커 ID로 사용
             - name: KAFKA_CFG_ZOOKEEPER_CONNECT
               value: "zoo-headless.stockly.svc.cluster.local:2181"  # Zookeeper 연결 설정
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"  # 리스너 설정
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-{{ $i }}.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"  # 광고 리스너 설정
+              value: "PLAINTEXT://kafka-$(HOSTNAME).stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"  # 광고 리스너 설정
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"  # 보안 프로토콜 설정
             - name: ALLOW_PLAINTEXT_LISTENER
@@ -58,4 +57,3 @@ spec:
         resources:
           requests:
             storage: 10Gi  # 원하는 스토리지 크기로 조정
-{{- end }}
