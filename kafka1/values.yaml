@@ -21,4 +21,4 @@ kafka:
     size: 10Gi
 
 externalZookeeper:
-  servers: ["zoo-headless.stockly.svc.cluster.local:2181"]
+  servers: ["zookeeper-headless.stockly.svc.cluster.local:2181"]
