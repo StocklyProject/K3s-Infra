@@ -1,4 +1,4 @@
-{{- range $i := until .Values.replicaCount | int }}}
+{{- range $i := until (int .Values.replicaCount) }}  # replicaCount를 int로 변환
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -31,7 +31,7 @@ spec:
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"  # 리스너 설정
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-{{ $i }}.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"
+              value: "PLAINTEXT://kafka-{{ $i }}.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"  # 광고 리스너 설정
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"  # 보안 프로토콜 설정
             - name: ALLOW_PLAINTEXT_LISTENER
