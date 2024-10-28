@@ -40,7 +40,7 @@ spec:
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
             - name: ALLOW_PLAINTEXT_LISTENER
-              value: "yes"
+              value: 'yes'
           volumeMounts:
             - name: kafka-data
               mountPath: /bitnami/kafka/data
