@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+        - name: zookeeper
+          image: {{ .Values.zookeeper.image }}
+          ports:
+            - containerPort: {{ .Values.zookeeper.port }}
+          resources:
+            limits:
+              memory: {{ .Values.zookeeper.resources.limits.memory }}
+              cpu: {{ .Values.zookeeper.resources.limits.cpu }}
+            requests:
+              memory: {{ .Values.zookeeper.resources.requests.memory }}
+              cpu: {{ .Values.zookeeper.resources.requests.cpu }}
+          volumeMounts:
+            - name: zookeeper-data
+              mountPath: /bitnami/zookeeper
+          env:
+            - name: ALLOW_ANONYMOUS_LOGIN
+              value: {{ ternary "no" "yes" .Values.zookeeper.auth.client.enabled | quote }}
+            - name: ZOO_ENABLE_AUTH
+              value: {{ ternary "true" "false" .Values.zookeeper.auth.client.enabled | quote }}
+      volumes:
+        - name: zookeeper-data
+          persistentVolumeClaim:
+            claimName: zookeeper-pv-claim
