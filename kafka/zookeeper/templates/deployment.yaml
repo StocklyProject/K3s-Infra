@@ -30,7 +30,7 @@ spec:
               mountPath: /bitnami/zookeeper/data
           env:
             - name: ALLOW_ANONYMOUS_LOGIN
-              value: {{ ternary "no" "yes" .Values.zookeeper.auth.client.enabled | quote }}
+              value: "yes"
             - name: ZOO_ENABLE_AUTH
               value: {{ ternary "true" "false" .Values.zookeeper.auth.client.enabled | quote }}
   volumeClaimTemplates:
