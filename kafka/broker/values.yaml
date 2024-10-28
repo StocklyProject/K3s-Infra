@@ -1,5 +1,5 @@
 # Kafka 브로커 수를 3개로 설정
-replicaCount: 3  # 브로커 수를 3개로 확장
+replica: 3  # 브로커 수를 3개로 확장
 
 image:
   registry: docker.io  # 기본 Docker 레지스트리 사용
