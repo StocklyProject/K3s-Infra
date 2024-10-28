@@ -96,10 +96,10 @@ spec:
             - |
               export KAFKA_BROKER_ID=$(echo ${HOSTNAME} | awk -F'-' '{print $NF}')
               export KAFKA_CFG_ZOOKEEPER_CONNECT="zoo-headless.stockly.svc.cluster.local:2181"
-              export KAFKA_CFG_LISTENERS="PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"
-              export KAFKA_CFG_ADVERTISED_LISTENERS="PLAINTEXT://${HOSTNAME}.kafka-headless.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"
-              export KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP="PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
-              exec kafka-server-start.sh /path/to/kafka/config/server.properties
+              export KAFKA_CFG_LISTENERS="CLIENT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"
+              export KAFKA_CFG_ADVERTISED_LISTENERS="CLIENT://${HOSTNAME}.kafka-headless.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"
+              export KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP="CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT"
+              exec kafka-server-start.sh /opt/bitnami/kafka/config/server.properties
           resources:
             limits:
               memory: {{ .Values.resources.limits.memory }}
