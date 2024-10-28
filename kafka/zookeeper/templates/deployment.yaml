@@ -32,7 +32,7 @@ spec:
             - name: ALLOW_ANONYMOUS_LOGIN
               value: "yes"
             - name: ZOO_ENABLE_AUTH
-              value: {{ ternary "true" "false" .Values.zookeeper.auth.client.enabled | quote }}
+              value: "false"
   volumeClaimTemplates:
     - metadata:
         name: zookeeper-data
