@@ -22,6 +22,7 @@ spec:
             - containerPort: {{ .Values.kafka.ports.externalPort }}
               name: external
           env:
+            # StatefulSet 포드의 인덱스를 Kafka Broker ID로 설정
             - name: KAFKA_BROKER_ID
               valueFrom:
                 fieldRef:
@@ -31,14 +32,26 @@ spec:
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-$(metadata.name).kafka-headless:9092,EXTERNAL://localhost:9094"
+              value: "PLAINTEXT://kafka-$(hostname).kafka-headless:9092,EXTERNAL://localhost:9094"
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
+            - name: KAFKA_CFG_LOG_DIRS
+              value: "/bitnami/kafka/data"  # 로그 디렉터리 설정 추가
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"  # 토픽 자동 생성 활성화
+            - name: KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR
+              value: "1"
+            - name: KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: "1"
           command:
-            - kafka-server-start.sh
-            - /opt/bitnami/kafka/config/server.properties
+            - sh
+            - -c
+            - |
+              exec kafka-server-start.sh /opt/bitnami/kafka/config/server.properties
           volumeMounts:
             - name: data
               mountPath: /bitnami/kafka
