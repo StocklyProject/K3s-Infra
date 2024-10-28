@@ -1,0 +1,26 @@
+replicaCount: 3
+
+zookeeper:
+  image: "bitnami/zookeeper:3.7"
+  ports:
+    clientPort: 2181
+    electionPort: 2888
+    leaderPort: 3888
+  persistence:
+    enabled: true
+    size: 5Gi
+
+kafka:
+  image: "bitnami/kafka"
+  ports:
+    clientPort: 9092
+    externalPort: 9094
+  zookeeperConnect: "zookeeper-headless:2181"
+  persistence:
+    enabled: true
+    size: 10Gi
+
+kafkaUI:
+  image: "provectuslabs/kafka-ui"
+  service:
+    port: 8090
