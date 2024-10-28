@@ -34,18 +34,23 @@ releases:
     namespace: stockly
     values:
       - ./mysql/values.yaml
-  - name: broker
-    chart: ./kafka/broker
-    namespace: stockly
-    values:
-      - ./kafka/broker/values.yaml
-  - name: zookeeper
-    chart: ./kafka/zookeeper
-    namespace: stockly
-    values:
-      - ./kafka/zookeeper/values.yaml
+#  - name: broker
+#    chart: ./kafka/broker
+#    namespace: stockly
+#    values:
+#      - ./kafka/broker/values.yaml
+#  - name: zookeeper
+#    chart: ./kafka/zookeeper
+#    namespace: stockly
+#    values:
+#      - ./kafka/zookeeper/values.yaml
   - name: redis
     chart: ./redis/
     namespace: stockly
     values:
       - ./redis/values.yaml
+  - name: kafka
+    chart: ./kafka1/
+    namespace: stockly
+    values:
+      - ./kafka1/values.yaml
