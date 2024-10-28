@@ -1,12 +1,12 @@
-{{- range $i := until .Values.replicaCount }}  # replicaCount를 int로 변환
+{{- range $i := until .Values.replicaCount }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: kafka
+  name: kafka-{{ $i }}  # 브로커 이름에 인덱스 추가
 spec:
   serviceName: kafka
-  replicas: {{ .Values.replicaCount }}  # 브로커 수 설정 (int로 변환)
+  replicas: {{ .Values.replicaCount }}  # 브로커 수 설정
   selector:
     matchLabels:
       app: kafka
@@ -26,6 +26,8 @@ spec:
             - name: interbroker
               containerPort: {{ .Values.listeners.interbroker.containerPort }}  # 브로커 간 포트
           env:
+            - name: KAFKA_BROKER_ID
+              value: "{{ $i }}"  # 브로커 ID 설정
             - name: KAFKA_CFG_ZOOKEEPER_CONNECT
               value: "zoo-headless.stockly.svc.cluster.local:2181"  # Zookeeper 연결 설정
             - name: KAFKA_CFG_LISTENERS

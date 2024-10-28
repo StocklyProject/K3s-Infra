@@ -1,5 +1,4 @@
-# Kafka 브로커 수를 3개로 설정
-replicaCount: 3  # 브로커 수를 3개로 확장
+replicaCount: 3
 
 image:
   registry: docker.io  # 기본 Docker 레지스트리 사용
@@ -34,7 +33,7 @@ listeners:
 
 # Kafka 로그 설정 (필요시 적용)
 log4j: |
-  log4j.rootLogger=INFO, stdout  # 루트 로그 레벨을 INFO로 설정
+  log4j.rootLogger=INFO, stdout
   log4j.appender.stdout=org.apache.log4j.ConsoleAppender
   log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
   log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
