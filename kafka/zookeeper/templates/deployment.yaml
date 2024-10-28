@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: zookeeper
 spec:
-  replicas: {{ .Values.replicaCount }}
+  serviceName: zookeeper
+  replicas: {{ .Values.replicaCount }}  # Zookeeper 인스턴스 수
   selector:
     matchLabels:
       app: zookeeper
@@ -26,13 +27,18 @@ spec:
               cpu: {{ .Values.zookeeper.resources.requests.cpu }}
           volumeMounts:
             - name: zookeeper-data
-              mountPath: /bitnami/zookeeper
+              mountPath: /bitnami/zookeeper/data
           env:
             - name: ALLOW_ANONYMOUS_LOGIN
               value: {{ ternary "no" "yes" .Values.zookeeper.auth.client.enabled | quote }}
             - name: ZOO_ENABLE_AUTH
               value: {{ ternary "true" "false" .Values.zookeeper.auth.client.enabled | quote }}
-      volumes:
-        - name: zookeeper-data
-          persistentVolumeClaim:
-            claimName: zookeeper-pv-claim
+  volumeClaimTemplates:
+    - metadata:
+        name: zookeeper-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi  # 원하는 스토리지 크기로 조정

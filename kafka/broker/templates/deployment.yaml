@@ -1,11 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: kafka-broker
-  labels:
-    app: kafka
+  name: kafka
 spec:
-  replicas: {{ .Values.replicaCount }}
+  serviceName: kafka
+  replicas: {{ .Values.replicaCount }}  # 브로커 수 설정
   selector:
     matchLabels:
       app: kafka
@@ -17,28 +16,40 @@ spec:
       containers:
         - name: kafka
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
-            - containerPort: {{ .Values.listeners.client.containerPort }}
-            - containerPort: {{ .Values.listeners.external.containerPort }}
-            - containerPort: {{ .Values.listeners.interbroker.containerPort }}
+            - name: client
+              containerPort: {{ .Values.listeners.client.containerPort }}
+            - name: external
+              containerPort: {{ .Values.listeners.external.containerPort }}
+            - name: interbroker
+              containerPort: {{ .Values.listeners.interbroker.containerPort }}
           env:
             - name: KAFKA_CFG_ZOOKEEPER_CONNECT
               value: "zoo-headless.stockly.svc.cluster.local:2181"
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-broker.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"
+              value: "PLAINTEXT://kafka-{{ .Values.replicaIndex }}.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
           volumeMounts:
             - name: kafka-data
-              mountPath: /bitnami/kafka
-      volumes:
-        - name: kafka-data
-          persistentVolumeClaim:
-            claimName: kafka-pvc
+              mountPath: /bitnami/kafka/data
+  volumeClaimTemplates:
+    - metadata:
+        name: kafka-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi  # 원하는 스토리지 크기로 조정
