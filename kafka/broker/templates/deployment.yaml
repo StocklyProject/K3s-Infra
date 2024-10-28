@@ -29,7 +29,7 @@ spec:
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"  # 리스너 설정
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-{{ .Values.replicaIndex }}.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"  # 광고 리스너 설정
+              value: "PLAINTEXT://kafka-{{ .StatefulSet.podName }}.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"  # 광고 리스너 설정
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"  # 보안 프로토콜 설정
             - name: ALLOW_PLAINTEXT_LISTENER
