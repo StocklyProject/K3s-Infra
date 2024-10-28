@@ -1,12 +1,10 @@
-{{- range $i := until .Values.replica }}
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: kafka
 spec:
   serviceName: kafka
-  replicas: {{ .Values.replicaCount }}  # 브로커 수 설정
+  replicas: {{ .Values.replicaCount | int }}  # 브로커 수 설정 (int로 변환)
   selector:
     matchLabels:
       app: kafka
@@ -31,7 +29,7 @@ spec:
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"  # 리스너 설정
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-{{ $i }}.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"  # 광고 리스너 설정
+              value: "PLAINTEXT://kafka-{{ .Values.replicaCount }}.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"  # 보안 프로토콜 설정
             - name: ALLOW_PLAINTEXT_LISTENER
@@ -55,4 +53,3 @@ spec:
         resources:
           requests:
             storage: 10Gi  # 원하는 스토리지 크기로 조정
-{{- end }}
