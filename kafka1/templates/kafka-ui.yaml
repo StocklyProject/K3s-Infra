@@ -16,7 +16,7 @@ spec:
         - name: kafka-ui
           image: {{ .Values.kafkaUI.image | default "provectuslabs/kafka-ui" }}
           ports:
-            - containerPort: {{ .Values.kafkaUI.service.port | default 8080 }}
+            - containerPort: {{ .Values.kafkaUI.service.port }}
           env:
             - name: KAFKA_CLUSTERS_0_NAME
               value: {{ .Values.kafkaUI.env.KAFKA_CLUSTERS_0_NAME | default "local-cluster" }}
