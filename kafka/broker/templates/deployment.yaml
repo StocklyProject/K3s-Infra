@@ -33,6 +33,8 @@ spec:
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
