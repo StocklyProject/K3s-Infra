@@ -1,5 +1,0 @@
-apiVersion: v2
-name: kafka-chart
-description: A Helm chart for deploying Kafka, Zookeeper, and Kafka UI
-version: 0.1.0
-appVersion: "2.8.0"

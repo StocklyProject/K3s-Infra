@@ -1,0 +1,46 @@
+replicaCount: 1
+
+image:
+  registry: docker.io  # 기본 레지스트리 사용
+  repository: bitnami/kafka
+  tag: 2.8.0
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    memory: "3Gi"
+    cpu: "1000m"
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+
+# Kafka 리스너 설정
+listeners:
+  client:
+    name: CLIENT
+    containerPort: 9092
+    protocol: PLAINTEXT  # 적절한 프로토콜 설정 (예: PLAINTEXT)
+  external:
+    name: EXTERNAL
+    containerPort: 9094
+    protocol: PLAINTEXT  # 적절한 프로토콜 설정
+  interbroker:
+    name: INTERNAL
+    containerPort: 9093
+    protocol: PLAINTEXT  # 내부 브로커 간 통신에 필요한 설정
+  securityProtocolMap: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
+
+
+# Kafka 로그 설정 (필요시 적용)
+log4j: |
+  log4j.rootLogger=INFO, stdout
+  log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+  log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+  log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+  log4j.logger.kafka=INFO
+  log4j.logger.org.apache.kafka=INFO
+
+# Kafka 퍼시스턴스 설정
+persistence:
+  enabled: true
+  size: 10Gi

@@ -1,0 +1,30 @@
+replicaCount: 1
+
+zookeeper:
+  enabled: true
+  image: "bitnami/zookeeper:3.7.0"
+  port: 2181
+  resources:
+    limits:
+      memory: "3Gi"
+      cpu: "1000m"
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+  auth:
+    client:
+      enabled: true
+  persistence:
+    enabled: true
+    size: 10Gi
+
+service:
+  type: None
+  ports:
+    - name: zookeeper-port
+      port: 2181
+      targetPort: 2181
+
+
+externalZookeeper:
+  servers: ["zoo-headless.stockly.svc.cluster.local:2181"]

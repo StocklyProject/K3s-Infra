@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka-broker
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/StocklyProject/K3s-Infra'
+    targetRevision: HEAD
+    path: kafka/broker
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: stockly
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
