@@ -46,6 +46,9 @@ persistence:
   enabled: true  # 퍼시스턴스 활성화
   size: 10Gi  # 각 브로커에 대해 10Gi의 스토리지 설정
 
+# Kafka 브로커 인덱스
+replicaIndex: 0  # 기본값으로 설정
+
 # Kafka 파티션 설정
 kafka:
   configurationOverrides:
