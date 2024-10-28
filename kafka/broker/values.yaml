@@ -44,3 +44,7 @@ log4j: |
 persistence:
   enabled: true
   size: 10Gi
+
+env:
+  - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+    value: "true"
