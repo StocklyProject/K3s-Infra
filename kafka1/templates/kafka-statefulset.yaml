@@ -25,7 +25,7 @@ spec:
             - name: KAFKA_BROKER_ID
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index'] # 1.28 이상 버전에서만 사용가능
+                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
             - name: KAFKA_ZOOKEEPER_CONNECT
               value: "zookeeper-headless:2181"
             - name: KAFKA_CFG_LISTENERS
