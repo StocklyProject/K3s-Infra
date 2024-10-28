@@ -19,3 +19,6 @@ kafka:
   persistence:
     enabled: true
     size: 10Gi
+
+externalZookeeper:
+  servers: ["zoo-headless.stockly.svc.cluster.local:2181"]
