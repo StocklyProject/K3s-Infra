@@ -50,6 +50,5 @@ persistence:
 kafka:
   configurationOverrides:
     "num.partitions": 5  # 생성되는 모든 토픽에 대한 기본 파티션 수를 5로 설정
-
 # 추가 설정
 autoCreateTopicsEnable: true  # 자동으로 토픽이 생성되도록 설정
