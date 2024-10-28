@@ -32,7 +32,7 @@ spec:
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-headless:9092,EXTERNAL://localhost:9094"
+              value: "PLAINTEXT://kafka-$(HOSTNAME).kafka-headless:9092,EXTERNAL://localhost:9094"
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
             - name: ALLOW_PLAINTEXT_LISTENER
@@ -41,13 +41,14 @@ spec:
             - sh
             - -c
             - |
+              echo "Starting Kafka with broker.id=${KAFKA_BROKER_ID}"
               exec kafka-server-start.sh /opt/bitnami/kafka/config/server.properties
           volumeMounts:
-            - name: data
-              mountPath: /bitnami/kafka
+            - name: kafka-data
+              mountPath: /bitnami/kafka/data
   volumeClaimTemplates:
     - metadata:
-        name: data
+        name: kafka-data
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
