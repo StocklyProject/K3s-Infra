@@ -36,7 +36,7 @@ spec:
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-$(HOSTNAME).kafka-headless:9092,EXTERNAL://localhost:9094"
+              value: "PLAINTEXT://kafka-$(HOSTNAME).kafka-headless.stockly.svc.cluster.local:9092,EXTERNAL://localhost:9094"
             - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
             - name: ALLOW_PLAINTEXT_LISTENER
