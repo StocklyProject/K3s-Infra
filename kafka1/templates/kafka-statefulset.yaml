@@ -22,6 +22,10 @@ spec:
             - containerPort: {{ .Values.kafka.ports.externalPort }}
               name: external
           env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: KAFKA_BROKER_ID
               valueFrom:
                 fieldRef:
