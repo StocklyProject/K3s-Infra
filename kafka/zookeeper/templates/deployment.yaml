@@ -15,9 +15,10 @@ spec:
     spec:
       containers:
         - name: zookeeper
-          image: {{ .Values.zookeeper.image }}
+          image: {{ .Values.zookeeper.image }}  # 이미지 설정
           ports:
-            - containerPort: {{ .Values.zookeeper.port }}
+            - name: client
+              containerPort: {{ .Values.zookeeper.port }}  # 포트 설정
           resources:
             limits:
               memory: {{ .Values.zookeeper.resources.limits.memory }}
@@ -27,12 +28,12 @@ spec:
               cpu: {{ .Values.zookeeper.resources.requests.cpu }}
           volumeMounts:
             - name: zookeeper-data
-              mountPath: /bitnami/zookeeper/data
+              mountPath: /bitnami/zookeeper/data  # 데이터 저장 경로
           env:
             - name: ALLOW_ANONYMOUS_LOGIN
-              value: "yes"
+              value: "yes"  # 익명 로그인 허용
             - name: ZOO_ENABLE_AUTH
-              value: "false"
+              value: "false"  # 인증 비활성화
   volumeClaimTemplates:
     - metadata:
         name: zookeeper-data
