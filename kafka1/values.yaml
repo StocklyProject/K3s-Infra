@@ -19,13 +19,3 @@ kafka:
   persistence:
     enabled: true
     size: 10Gi
-
-kafkaUI:
-  image: "provectuslabs/kafka-ui"
-  service:
-    port: 8090
-  env:
-    KAFKA_CLUSTERS_0_NAME: "local-cluster"
-    KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka-0.kafka-headless:9092,kafka-1.kafka-headless:9092,kafka-2.kafka-headless:9092"
-    KAFKA_CLUSTERS_0_ZOOKEEPER: "zookeeper-0.zookeeper-headless:2181,zookeeper-1.zookeeper-headless:2181,zookeeper-2.zookeeper-headless:2181"
-    KAFKA_CLUSTERS_0_READONLY: "false"
