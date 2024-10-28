@@ -13,7 +13,7 @@ zookeeper:
       cpu: "500m"
   auth:
     client:
-      enabled: true
+      enabled: yes
   persistence:
     enabled: true
     size: 10Gi
