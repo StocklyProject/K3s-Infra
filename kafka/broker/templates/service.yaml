@@ -4,7 +4,6 @@ metadata:
   name: kafka-broker
 spec:
   type: ClusterIP
-  clusterIP: 10.106.136.219  # 고정 IP 설정
   ports:
     - name: kafka-client-port
       port: {{ .Values.listeners.client.containerPort }}
