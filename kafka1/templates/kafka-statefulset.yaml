@@ -38,14 +38,6 @@ spec:
               value: "PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
-          command:
-            - sh
-            - -c
-            - |
-              export KAFKA_BROKER_ID=$(echo ${HOSTNAME} | awk -F'-' '{print $NF}')
-              export KAFKA_CFG_ADVERTISED_LISTENERS="PLAINTEXT://kafka-${KAFKA_BROKER_ID}.kafka-headless:9092,EXTERNAL://localhost:9094"
-              echo "Starting Kafka with broker.id=${KAFKA_BROKER_ID}"
-              exec kafka-server-start.sh /opt/bitnami/kafka/config/server.properties
           volumeMounts:
             - name: kafka-data
               mountPath: /bitnami/kafka/data
