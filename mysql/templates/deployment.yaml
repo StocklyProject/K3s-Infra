@@ -45,6 +45,9 @@ spec:
               mountPath: /var/lib/mysql
             - name: initdb-scripts
               mountPath: /docker-entrypoint-initdb.d
+            - name: mysql-config
+              mountPath: /etc/mysql/conf.d/my.cnf
+              subPath: my.cnf
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
@@ -52,3 +55,12 @@ spec:
         - name: initdb-scripts
           configMap:
             name: mysql-config
+            items:
+              - key: init.sql
+                path: init.sql
+        - name: mysql-config
+          configMap:
+            name: mysql-config
+            items:
+              - key: my.cnf
+                path: my.cnf
