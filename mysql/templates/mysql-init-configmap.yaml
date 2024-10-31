@@ -19,8 +19,25 @@ data:
       is_deleted BOOLEAN DEFAULT FALSE
     );
 
+    -- stock 테이블 생성
+    CREATE TABLE IF NOT EXISTS stock (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted TINYINT DEFAULT 0,
+    symbol VARCHAR(100),
+    high INT,
+    low INT,
+    volume BIGINT,
+    date DATETIME,
+    open INT,
+    close INT,
+    rate DOUBLE,
+    rate_price INT
+    );
+
     -- companies 테이블 생성
-    CREATE TABLE IF NOT EXISTS companies (
+    CREATE TABLE IF NOT EXISTS company (
       id INT AUTO_INCREMENT PRIMARY KEY,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -30,7 +47,7 @@ data:
     );
 
     -- companies 초기 데이터 삽입
-    INSERT INTO companies (name, symbol) VALUES
+    INSERT INTO company (name, symbol) VALUES
     ('삼성전자', '005930'),
     ('삼성전자우', '005935'),
     ('SK하이닉스', '000660'),
@@ -231,3 +248,14 @@ data:
     ('롯데칠성', '005300'),
     ('LX세미콘', '108320'),
     ('대덕전자', '353200');
+
+  my.cnf: |
+    [ client ]
+    default-character-set = utf8mb4
+
+    [ mysql ]
+    default-character-set = utf8mb4
+
+    [ mysqld ]
+    character-set-server = utf8mb4
+    collation-server = utf8mb4_unicode_ci
