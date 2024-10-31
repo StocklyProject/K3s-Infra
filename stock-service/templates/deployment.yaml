@@ -31,20 +31,20 @@ spec:
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: app-secret
+                  name: stock-service-secret
                   key: MYSQL_USER
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: app-secret
+                  name: stock-service-secret
                   key: MYSQL_PASSWORD
             - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: app-secret
+                  name: stock-service-secret
                   key: MYSQL_DATABASE
             - name: MYSQL_HOST
               valueFrom:
                 secretKeyRef:
-                  name: app-secret
+                  name: stock-service-secret
                   key: MYSQL_HOST
