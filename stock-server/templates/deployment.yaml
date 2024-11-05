@@ -89,3 +89,15 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: APP_SECRET
+            - name: SSE_KEY
+              valueFrom:
+                secretKeyRef:
+                    name: app-secret
+                    key: SSE_KEY
+            - name: SSE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: SSE_SECRET
+
+
