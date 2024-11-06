@@ -46,7 +46,7 @@ spec:
             - name: initdb-scripts
               mountPath: /docker-entrypoint-initdb.d
             - name: mysql-config
-              mountPath: /etc/mysql/conf.d/my.cnf
+              mountPath: /etc/mysql/my.cnf
               subPath: my.cnf
       volumes:
         - name: mysql-persistent-storage
