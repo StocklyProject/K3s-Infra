@@ -99,5 +99,15 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: SSE_SECRET
+            - name: HOGA_KEY
+              valueFrom:
+                secretKeyRef:
+                    name: app-secret
+                    key: HOGA_KEY
+            - name: HOGA_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: HOGA_SECRET
 
 

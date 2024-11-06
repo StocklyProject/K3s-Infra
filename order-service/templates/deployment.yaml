@@ -26,3 +26,25 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "250m"
+          env:
+            # MySQL 관련 환경변수
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: order-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: order-secret
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: order-secret
+                  key: MYSQL_DATABASE
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: order-secret
+                  key: MYSQL_HOST
