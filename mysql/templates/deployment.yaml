@@ -48,26 +48,6 @@ spec:
             - name: mysql-config
               mountPath: /etc/mysql/my.cnf
               subPath: my.cnf
-            - name: timezone
-              mountPath: /etc/localtime
-              subPath: Asia/Seoul
-      initContainers:
-        - name: load-timezone-data
-          image: mysql:latest
-          command:
-            - sh
-            - -c
-            - |
-              mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p$MYSQL_ROOT_PASSWORD mysql
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: MYSQL_ROOT_PASSWORD
-          volumeMounts:
-            - name: timezone
-              mountPath: /usr/share/zoneinfo
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
@@ -84,6 +64,3 @@ spec:
             items:
               - key: my.cnf
                 path: my.cnf
-        - name: timezone
-          hostPath:
-            path: /usr/share/zoneinfo
