@@ -9,10 +9,10 @@ image:
 resources:
   limits:
     memory: "4Gi"    # 메모리 제한을 4Gi로 설정
-    cpu: "2000m"     # CPU 제한을 2 vCPU로 설정
+    cpu: "4000m"     # CPU 제한을 4 vCPU로 설정
   requests:
     memory: "2Gi"    # 메모리 요청을 2Gi로 설정
-    cpu: "1000m"     # CPU 요청을 1 vCPU로 설정
+    cpu: "2000m"     # CPU 요청을 2 vCPU로 설정
 
 # Kafka 리스너 설정
 listeners:
