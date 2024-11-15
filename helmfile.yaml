@@ -19,16 +19,6 @@ releases:
     namespace: stockly
     values:
       - ./order-service/values.yaml
-  - name: mypage-service
-    chart: ./mypage-service
-    namespace: stockly
-    values:
-      - ./mypage-service/values.yaml
-  - name: alert-service
-    chart: ./alert-service
-    namespace: stockly
-    values:
-      - ./alert-service/values.yaml
   - name: mysql
     chart: ./mysql
     namespace: stockly
