@@ -39,7 +39,8 @@ data:
     close INT,
     rate DOUBLE,
     rate_price INT,
-    trading_value BIGINT
+    trading_value BIGINT,
+    is_daily BOOLEAN DEFAULT TRUE
     );
 
     -- companies 테이블 생성
