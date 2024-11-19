@@ -1,6 +1,6 @@
 stockService:
   name: stock-service
-  replica: 1
+  replica: 2
   enabled: true
-  image: jungeunyoon/stock-service:0.0.68
+  image: jungeunyoon/stock-service:0.0.71
   port: 8001
