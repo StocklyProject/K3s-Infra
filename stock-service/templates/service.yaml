@@ -1,19 +1,4 @@
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: {{ .Values.stockService.name }}
-#   labels:
-#     app: {{ .Values.stockService.name }}
-# spec:
-#   type: ClusterIP
-#   ports:
-#     - port: {{ .Values.stockService.port }}
-#       targetPort: {{ .Values.stockService.port }}
-#       protocol: TCP
-#   selector:
-#     app: {{ .Values.stockService.name }}
-
-apiVersion: v1
+apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.stockService.name }}
