@@ -5,17 +5,17 @@ metadata:
   labels:
     app: {{ .Values.stockService.name }}
 spec:
-  type: NodePort # NodePort로 설정해 특정 포트 열기
+  type: NodePort  
   ports:
     - port: {{ .Values.stockService.port }}
       targetPort: {{ .Values.stockService.port }}
       protocol: TCP
-      nodePort: 30000 # 기본 포트 (localhost:30000)
+      nodePort: 30000 
 
-    - port: 8001 # 추가 포트 8001 열기
-      targetPort: {{ .Values.stockService.port }} # 동일한 Pod 포트로 라우팅
+    - port: 8001 
+      targetPort: {{ .Values.stockService.port }}  
       protocol: TCP
-      nodePort: 30001 # NodePort로 localhost:8001 접근 가능
+      nodePort: 30001 
   selector:
     app: {{ .Values.stockService.name }}
 
