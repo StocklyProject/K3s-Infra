@@ -1,6 +1,6 @@
 stockServer:
   name: stock-server
-  replica: 2
+  replica: 1
   enabled: true
   image: jungeunyoon/stock_server:0.0.160
   port: 8000
