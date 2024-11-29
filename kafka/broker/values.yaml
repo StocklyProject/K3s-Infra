@@ -8,11 +8,12 @@ image:
 
 resources:
   limits:
-    memory: "8Gi"    # 메모리 제한을 8Gi로 확장
-    cpu: "8000m"     # CPU 제한을 8 vCPU로 확장
+    memory: "8Gi"
+    cpu: "8000m"
   requests:
-    memory: "4Gi"    # 메모리 요청을 4Gi로 확장
-    cpu: "4000m"     # CPU 요청을 4 vCPU로 확장
+    memory: "4Gi"
+    cpu: "4000m"
+
 
 # Kafka 리스너 설정
 listeners:
@@ -47,4 +48,4 @@ persistence:
 
 env:
   - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
-    value: "false"
+    value: "true"
