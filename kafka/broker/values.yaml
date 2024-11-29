@@ -43,8 +43,8 @@ log4j: |
 # Kafka 퍼시스턴스 설정
 persistence:
   enabled: true
-  size: 10Gi
+  size: 20Gi
 
 env:
   - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
-    value: "true"
+    value: "false"
