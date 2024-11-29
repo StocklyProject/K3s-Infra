@@ -2,7 +2,7 @@ stockServer:
   name: stock-server
   replica: 1
   enabled: true
-  image: jungeunyoon/stock_server:0.0.170
+  image: jungeunyoon/stock_server:0.0.172
   port: 8000
   auth:
     secretName: app-secret
