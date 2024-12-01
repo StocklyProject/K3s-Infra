@@ -10,6 +10,6 @@ spec:
     - port: {{ .Values.stockServer.port }}
       targetPort: {{ .Values.stockServer.port }}
       protocol: TCP
-      nodePort: 30080
+      nodePort: 30080 # 30000~32767 만 사용 가능
   selector:
     app: {{ .Values.stockServer.name }}

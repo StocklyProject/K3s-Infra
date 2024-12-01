@@ -5,10 +5,11 @@ metadata:
   labels:
     app: {{ .Values.orderService.name }}
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: {{ .Values.orderService.port }}
       targetPort: {{ .Values.orderService.port }}
       protocol: TCP
+      nodePort: 30082 # 30000~32767 만 사용 가능
   selector:
     app: {{ .Values.orderService.name }}
