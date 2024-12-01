@@ -1,33 +1,15 @@
-{% comment %} apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.stockServer.name }}
-  labels:
-    app: {{ .Values.stockServer.name }}
-spec:
-  type: ClusterIP
-  ports:
-    - port: {{ .Values.stockServer.port }}
-      targetPort: {{ .Values.stockServer.port }}
-      protocol: TCP
-  selector:
-    app: {{ .Values.stockServer.name }}
-
- {% endcomment %}
-
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.stockServer.name }}
+  name: { { .Values.stockServer.name } }
   labels:
-    app: {{ .Values.stockServer.name }}
+    app: { { .Values.stockServer.name } }
 spec:
-  type: NodePort # ClusterIP에서 NodePort로 변경
+  type: NodePort
   ports:
-    - port: {{ .Values.stockServer.port }}
-      targetPort: {{ .Values.stockServer.port }}
+    - port: { { .Values.stockServer.port } }
+      targetPort: { { .Values.stockServer.port } }
       protocol: TCP
-      nodePort: 30080 # 원하는 포트를 명시적으로 지정 (30000-32767 범위)
+      nodePort: 30080
   selector:
-    app: {{ .Values.stockServer.name }}
+    app: { { .Values.stockServer.name } }
