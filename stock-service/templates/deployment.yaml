@@ -48,3 +48,9 @@ spec:
                 secretKeyRef:
                   name: stock-service-secret
                   key: MYSQL_HOST
+                        # Redis 관련 환경변수
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: stock-service-secret
+                  key: REDIS_URL
