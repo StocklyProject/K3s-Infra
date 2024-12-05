@@ -13,7 +13,27 @@ data:
     CREATE DATABASE IF NOT EXISTS stockly;
     USE stockly;
 
-    -- user 테이블 생성
+    CREATE TABLE IF NOT EXISTS stock (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        created_at TIMESTAMP,
+        updated_at TIMESTAMP,
+        is_deleted BOOLEAN DEFAULT FALSE,
+        symbol VARCHAR(100),
+        high INT,
+        low INT,
+        volume BIGINT,
+        date DATETIME,
+        open INT,
+        close INT,
+        rate DOUBLE,
+        rate_price INT,
+        trading_value BIGINT,
+        is_daily BOOLEAN DEFAULT TRUE
+    );
+
+    ALTER TABLE stock
+    ADD UNIQUE KEY unique_symbol_date (symbol, date);
+
     CREATE TABLE IF NOT EXISTS user (
       id INT AUTO_INCREMENT PRIMARY KEY,
       email VARCHAR(100) NOT NULL,
@@ -21,85 +41,78 @@ data:
       name VARCHAR(100) NOT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      is_deleted BOOLEAN DEFAULT FALSE
+    );
+
+    CREATE TABLE IF NOT EXISTS user_data (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL, -- user 테이블의 ID와 연결
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       is_deleted BOOLEAN DEFAULT FALSE,
-      total_roi  DOUBLE DEFAULT 0.0, -- ROI(수익률)는 0으로 초기화
-      total_asset INT DEFAULT 1000000, -- 초기 자산: 현금 + 주식가치
-      total_stock INT DEFAULT 0, -- 보유한 주식 총 가치 (가격 기준)
-      cash INT DEFAULT 1000000 -- 초기 현금 (100만)
+      total_roi DOUBLE DEFAULT 0.0, -- ROI(수익률)
+      total_asset INT DEFAULT 1000000, -- 초기 자산
+      total_stock INT DEFAULT 0, -- 보유한 주식 총 가치
+      cash INT DEFAULT 1000000, -- 초기 현금
+      is_daily BOOLEAN DEFAULT TRUE,
+      FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
     );
 
-    -- stock 테이블 생성
-    CREATE TABLE IF NOT EXISTS stock (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    is_deleted TINYINT DEFAULT 0,
-    symbol VARCHAR(100),
-    high INT,
-    low INT,
-    volume BIGINT,
-    date DATETIME,
-    open INT,
-    close INT,
-    rate DOUBLE,
-    rate_price INT,
-    trading_value BIGINT,
-    is_daily BOOLEAN DEFAULT TRUE
-    );
-
-    -- notification 테이블 생성
-    CREATE TABLE IF NOT EXISTS notification (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    company_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    is_deleted BOOLEAN DEFAULT FALSE,
-    price INT, 
-    is_active BOOLEAN DEFAULT FALSE
-    );
-
-
-    -- companies 테이블 생성
     CREATE TABLE IF NOT EXISTS company (
       id INT AUTO_INCREMENT PRIMARY KEY,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      is_deleted TINYINT(1) DEFAULT 0,
+      is_deleted BOOLEAN DEFAULT FALSE,
       name VARCHAR(100) NOT NULL,
       symbol VARCHAR(100) NOT NULL
     );
 
-    -- companies 초기 데이터 삽입
-    INSERT INTO company (name, symbol) VALUES
-      ('삼성전자', '005930'),
-      ('LG', '003550'),
-      ('SK하이닉스', '000660'),
-      ('삼성바이오로직스','207940'),
-      ('기아', '000270'),
-      ('카카오', '035720'),
-      ('NAVER','035420'),
-      ('LK삼양','225190'),
-      ('JYP Ent.', '035900'),
-      ('고려아연', '010130');
-
-
-    -- stock_order 초기 데이터 삽입
-    CREATE TABLE IF NOT EXISTS stock_order (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    is_deleted BOOLEAN DEFAULT FALSE,
-    user_id INT NOT NULL,
-    company_id INT NOT NULL,
-    type VARCHAR(100) NOT NULL,
-    price INT NOT NULL,
-    quantity INT NOT NULL,
-    total_price INT NOT NULL,
-    status VARCHAR(100),
-    CONSTRAINT fk_order_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_order_company FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE ON UPDATE CASCADE
+    CREATE TABLE IF NOT EXISTS notification (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        company_id INT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        is_deleted BOOLEAN DEFAULT FALSE,
+        price INT, 
+        is_active BOOLEAN DEFAULT FALSE
     );
+
+    CREATE TABLE IF NOT EXISTS stock_order (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        is_deleted BOOLEAN DEFAULT FALSE,
+        user_id INT NOT NULL,
+        company_id INT NOT NULL,
+        type VARCHAR(100) NOT NULL,
+        price INT NOT NULL,
+        quantity INT NOT NULL,
+        total_price INT NOT NULL,
+        status VARCHAR(100),
+        CONSTRAINT fk_order_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
+        CONSTRAINT fk_order_company FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE ON UPDATE CASCADE
+    );
+
+    INSERT INTO company (name, symbol) VALUES
+    ('삼성전자', '005930'),
+    ('LG', '003550'),
+    ('SK하이닉스', '000660'),
+    ('삼성바이오로직스','207940'),
+    ('기아', '000270');
+
+    -- 트리거 추가
+    DELIMITER $$
+
+    CREATE TRIGGER after_user_insert
+    AFTER INSERT ON user
+    FOR EACH ROW
+    BEGIN
+      INSERT INTO user_data (user_id, total_roi, total_asset, total_stock, cash)
+      VALUES (NEW.id, 0.0, 1000000, 0, 1000000);
+    END $$
+
+    DELIMITER ;
       
   my.cnf: |
     [ client ]
