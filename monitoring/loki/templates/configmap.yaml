@@ -30,7 +30,7 @@ data:
         schema: v11
         index:
           prefix: index_
-          period: 168h
+          period: 24h  # 변경된 부분
       {{- end }}
     storage_config:
       {{- if .Values.config.storage_config }}
