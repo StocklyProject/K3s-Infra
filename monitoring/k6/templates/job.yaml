@@ -19,7 +19,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              k6 run --out json=/scripts/results.json /scripts/{{ .Values.script.fileName }} &&
+              k6 run --out json=/tmp/results.json /scripts/{{ .Values.script.fileName }} &&
               curl -X POST \
                 -H "Content-Type: application/json" \
                 -d @/tmp/results.json \
@@ -44,3 +44,5 @@ spec:
         - name: k6-scripts
           configMap:
             name: {{ .Values.script.configMapName }}
+        - name: writable-dir
+          emptyDir: {}  # 쓰기 가능한 빈 디렉토리 추가
