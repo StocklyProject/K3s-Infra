@@ -49,3 +49,8 @@ releases:
     namespace: stockly
     values:
       - ./monitoring/loki/values.yaml
+  - name: k6
+    chart: ./monitoring/k6
+    namespace: stockly
+    values:
+      - ./monitoring/k6/values.yaml
