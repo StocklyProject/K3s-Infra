@@ -11,7 +11,7 @@ service:
 
 persistence:
   enabled: true
-  storageClassName: standard
+  storageClassName: hostpath
   accessModes:
     - ReadWriteOnce
   size: 10Gi

@@ -24,6 +24,7 @@ job:
   resultsPath: /tmp/results.json
 
 loki:
-  url: http://loki.stockly.svc.cluster.local:3100  # Loki 서비스 URL
+  url: http://loki-loki.stockly.svc.cluster.local:3100 # Loki 서비스 URL
 
 env: [] # Additional environment variables
+
