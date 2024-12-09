@@ -36,7 +36,7 @@ spec:
             - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
               value: "true"
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{ toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: kafka-data
               mountPath: /bitnami/kafka

@@ -39,3 +39,8 @@ releases:
     namespace: stockly
     values:
       - ./redis/values.yaml
+  - name: grafana
+    chart: ./monitoring/grafana
+    namespace: stockly
+    values:
+      - ./monitoring/grafana/values.yaml
