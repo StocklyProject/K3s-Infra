@@ -16,21 +16,18 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - /bin/sh
-            - -c
-            - |
-              k6 run --out loki={{ .Values.loki.url }} /scripts/{{ .Values.script.fileName }}
+            - k6
+            - run
+            - /scripts/{{ .Values.script.fileName }}
           env:
-            {{- if .Values.env }}
-            {{- range .Values.env }}
-            - name: "{{ .name }}"
-              value: "{{ .value }}"
-            {{- end }}
-            {{- end }}
+            - name: LOKI_URL
+              value: "{{ .Values.loki.url }}"
           volumeMounts:
             - name: k6-scripts
               mountPath: /scripts
-              readOnly: true  # ConfigMap은 읽기 전용
+              readOnly: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
       restartPolicy: Never
       volumes:
         - name: k6-scripts
