@@ -14,6 +14,13 @@ spec:
       labels:
         app: loki
     spec:
+      initContainers:
+        - name: init-loki-directories
+          image: busybox
+          command: ["sh", "-c", "mkdir -p /data/loki/boltdb-shipper-active /data/loki/boltdb-shipper-cache /data/loki/chunks /data/loki/wal && chmod -R 777 /data/loki"]
+          volumeMounts:
+            - name: loki-data
+              mountPath: /data/loki
       containers:
         - name: loki
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
