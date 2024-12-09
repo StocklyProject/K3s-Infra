@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/StocklyProject/K3s-Infra'
     targetRevision: HEAD
-    path: monitoring/grafana
+    path: monitoring/loki
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: stockly

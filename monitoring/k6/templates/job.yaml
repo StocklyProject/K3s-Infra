@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-k6-job
+  labels:
+    app: k6
+spec:
+  parallelism: {{ .Values.job.parallelism }}
+  template:
+    metadata:
+      labels:
+        app: k6
+    spec:
+      containers:
+        - name: k6
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              k6 run --out json=/scripts/results.json /scripts/{{ .Values.script.fileName }} &&
+              curl -X POST \
+                -H "Content-Type: application/json" \
+                -d @/scripts/results.json \
+                {{ .Values.loki.url }}/loki/api/v1/push
+          env:
+            {{- if .Values.env }}
+            {{- range .Values.env }}
+            - name: "{{ .name }}"
+              value: "{{ .value }}"
+            {{- end }}
+            {{- end }}
+          volumeMounts:
+            - name: k6-scripts
+              mountPath: /scripts
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      restartPolicy: Never
+      volumes:
+        - name: k6-scripts
+          configMap:
+            name: {{ .Values.script.configMapName }}

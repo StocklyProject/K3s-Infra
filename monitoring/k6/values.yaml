@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: grafana/k6
+  tag: 0.42.0
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+
+script:
+  configMapName: k6-script-config
+  fileName: test.js
+
+job:
+  parallelism: 1
+  testDuration: "1m"
+  vus: 10  # Virtual Users
+
+loki:
+  url: http://loki.stockly.svc.cluster.local:3100  # Loki 서비스 URL
+
+env: [] # Additional environment variables

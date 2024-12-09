@@ -44,3 +44,8 @@ releases:
     namespace: stockly
     values:
       - ./monitoring/grafana/values.yaml
+  - name: loki
+    chart: ./monitoring/loki
+    namespace: stockly
+    values:
+      - ./monitoring/loki/values.yaml
