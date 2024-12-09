@@ -36,6 +36,7 @@ spec:
         - name: grafana-storage
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-grafana-pvc
-#        - name: grafana-datasources
-#          configMap:
-#            name: {{ .Release.Name }}-grafana-datasources
+
+        - name: grafana-datasources
+          configMap:
+            name: {{ .Release.Name }}-grafana-datasources
