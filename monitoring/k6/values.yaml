@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: grafana/k6
-  tag: 0.42.0-curl
+  tag: 0.42.0
   pullPolicy: IfNotPresent
 
 resources:
