@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: loki
+  name: grafana
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/StocklyProject/K3s-Infra'
     targetRevision: HEAD
-    path: monitoring/loki
+    path: monitoring/grafana
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: stockly
