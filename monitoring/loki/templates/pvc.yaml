@@ -5,8 +5,9 @@ metadata:
   labels:
     app: loki
 spec:
-  accessModes: {{ .Values.persistence.accessModes }}
+  accessModes:
+    - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.persistence.size }}
-  storageClassName: {{ .Values.persistence.storageClassName }}
+      storage: 10Gi
+  storageClassName: hostpath
