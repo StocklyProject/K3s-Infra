@@ -21,6 +21,25 @@ data:
       reject_old_samples_max_age: 168h
     schema_config:
       configs:
+      {{- if .Values.config.schema_config.configs }}
       {{- toYaml .Values.config.schema_config.configs | nindent 8 }}
+      {{- else }}
+      - from: 2022-01-01
+        store: boltdb-shipper
+        object_store: filesystem
+        schema: v11
+        index:
+          prefix: index_
+          period: 168h
+      {{- end }}
     storage_config:
+      {{- if .Values.config.storage_config }}
       {{- toYaml .Values.config.storage_config | nindent 6 }}
+      {{- else }}
+      boltdb_shipper:
+        active_index_directory: /data/loki/boltdb-shipper-active
+        cache_location: /data/loki/boltdb-shipper-cache
+        shared_store: filesystem
+      filesystem:
+        directory: /data/loki/chunks
+      {{- end }}

@@ -24,17 +24,7 @@ resources:
     memory: 256Mi
     cpu: 250m
 
-loki:
-  auth_enabled: false
-
-  storage_config:
-    boltdb_shipper:
-      active_index_directory: /data/loki/boltdb-shipper-active
-      cache_location: /data/loki/boltdb-shipper-cache
-      shared_store: filesystem
-    filesystem:
-      directory: /data/loki/chunks
-
+config:
   schema_config:
     configs:
       - from: 2022-01-01
@@ -45,6 +35,13 @@ loki:
           prefix: index_
           period: 168h
 
+  storage_config:
+    boltdb_shipper:
+      active_index_directory: /data/loki/boltdb-shipper-active
+      cache_location: /data/loki/boltdb-shipper-cache
+      shared_store: filesystem
+    filesystem:
+      directory: /data/loki/chunks
+
   limits_config:
     retention_period: 168h
-

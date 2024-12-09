@@ -21,6 +21,7 @@ job:
   parallelism: 1
   testDuration: "1m"
   vus: 10  # Virtual Users
+  resultsPath: /tmp/results.json
 
 loki:
   url: http://loki.stockly.svc.cluster.local:3100  # Loki 서비스 URL

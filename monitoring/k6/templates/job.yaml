@@ -22,7 +22,7 @@ spec:
               k6 run --out json=/scripts/results.json /scripts/{{ .Values.script.fileName }} &&
               curl -X POST \
                 -H "Content-Type: application/json" \
-                -d @/scripts/results.json \
+                -d @/tmp/results.json \
                 {{ .Values.loki.url }}/loki/api/v1/push
           env:
             {{- if .Values.env }}
@@ -34,6 +34,9 @@ spec:
           volumeMounts:
             - name: k6-scripts
               mountPath: /scripts
+              readOnly: true  # ConfigMap은 읽기 전용
+            - name: writable-dir
+              mountPath: /tmp  # 쓰기 가능한 디렉토리
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       restartPolicy: Never
