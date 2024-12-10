@@ -1,6 +1,0 @@
-apiVersion: v2
-name: k6
-description: A Helm chart for K6 load testing
-type: application
-version: 1.0.0
-appVersion: 0.42.0
