@@ -2,5 +2,5 @@ orderService:
   name: order-service
   replica: 1
   enabled: true
-  image: jungeunyoon/order-service:0.0.36
+  image: jungeunyoon/order-service:0.0.37
   port: 8002
